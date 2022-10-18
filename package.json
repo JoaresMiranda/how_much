@@ -1,0 +1,23 @@
+{
+  "name": "how_much",
+  "version": "1.0.0",
+  "description": "a real price of things",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaresMiranda/how_much.git"
+  },
+  "author": "Joares Miranda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoaresMiranda/how_much/issues"
+  },
+  "homepage": "https://github.com/JoaresMiranda/how_much#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
+  }
+}
