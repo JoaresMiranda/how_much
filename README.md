@@ -9,4 +9,4 @@ The real price of the things
 
 ## Live demo
 
-- [live demo] (https://joaresmiranda.github.io/how_much)
+- [live demo](https://joaresmiranda.github.io/how_much)
