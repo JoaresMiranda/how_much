@@ -26,6 +26,15 @@ document.querySelector('#app').innerHTML = `
           <div>
             <input type="checkbox" id="haveTax" class="mr-2" checked="checked" />do have tax?
           </div>
+          <div>
+            <input
+              type="text"
+              inputmode="decimal"
+              placeholder="Insert price in Brazil (optional)"
+              id="inputPriceBr"
+              class="w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
           <button
             id="exchangeButton"
             type="button"
@@ -59,6 +68,7 @@ const CONVERTION = 3.9;
 const priceForm = document.querySelector('#priceForm');
 const inputPrice = document.querySelector('#inputPrice');
 const haveTax = document.querySelector('#haveTax');
+const inputPriceBr = document.querySelector('#inputPriceBr');
 const exchangeButton = document.querySelector('#exchangeButton');
 
 const resultContainer = document.querySelector('#resultContainer');
@@ -76,11 +86,6 @@ const allPrices = (initialPrice, tax) => {
   return getPriceReal(finalPrice);
 };
 
-const toggleContainers = () => {
-  priceForm.classList.toggle('hidden');
-  resultContainer.classList.toggle('hidden');
-};
-
 const formatToReal = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL',
@@ -91,32 +96,56 @@ const formatToCad = new Intl.NumberFormat('en-CA', {
   currency: 'CAD',
 });
 
+const toggleContainers = () => {
+  priceForm.classList.toggle('hidden');
+  resultContainer.classList.toggle('hidden');
+};
+
 inputPrice.focus();
 
 exchangeButton.addEventListener('click', (e) => {
   const initialPrice = parseFloat(inputPrice.value.replace(',', '.'));
-  console.log(initialPrice);
 
   if (isNaN(initialPrice)) return alert('Please, insert a price in CAD');
 
+  const priceFull = allPrices(initialPrice, haveTax.checked);
+
   const taxRender = haveTax.checked
-    ? `<li>💸 tax: CAD ${formatToCad.format(getTaxes(initialPrice))}</li>
+    ? `
+    <li>💸 tax: CAD ${formatToCad.format(getTaxes(initialPrice))}</li>
     <li>💵 price + tax: CAD ${formatToCad.format(addTaxes(initialPrice))}</li>`
-    : '<li>⚠️ <span class="text-xs text-slate-600">Price without taxes</span></li>';
+    : `
+    <li>⚠️ <span class="text-xs text-slate-600">Price without taxes</span></li>`;
+
+  const priceBr = parseFloat(inputPriceBr.value.replace(',', '.'));
+  const differencePrice = priceBr - priceFull;
+
+  const percentual = ((1 - priceFull / priceBr) * 100).toFixed(2);
+  const status = percentual > 0 ? `✅ Good shop` : `🚫 Bad shop`;
+
+  const priceBrRender = priceBr
+    ? `
+    <hr>
+    <li class="text-sm">${status}</li>
+    <li>🤔 Price in Brazil: ${formatToReal.format(priceBr)}</li>
+    <li>🆚 Difference prices: ${formatToReal.format(
+      differencePrice
+    )} <span class="text-xs text-slate-600">(${percentual}%)</span></li>`
+    : ``;
 
   resultPrices.innerHTML = `
     <ul class="flex flex-col gap-4">
-    <li>🇨🇦 CAD ${formatToCad.format(initialPrice)}</li>
-    ${taxRender}
-    <li><span class="text-xl font-bold">🇧🇷 ${formatToReal.format(
-      allPrices(initialPrice, haveTax.checked)
-    )}</span> 🫠</li>
-        </ul>`;
+        <li>🇨🇦 CAD ${formatToCad.format(initialPrice)}</li>
+        ${taxRender}
+        <li class="text-xl font-bold">🇧🇷 ${formatToReal.format(priceFull)} 🫠</li>
+        ${priceBrRender}
+    </ul>`;
   toggleContainers();
 });
 
 backButton.addEventListener('click', (e) => {
   toggleContainers();
   inputPrice.value = '';
+  inputPriceBr.value = '';
   e.target = inputPrice.focus();
 });
