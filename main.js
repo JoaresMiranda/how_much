@@ -16,7 +16,7 @@ document.querySelector('#app').innerHTML = `
         <form class="p-8 flex flex-col gap-6">
           <div>
             <input
-              type="number"
+              type="text"
               inputmode="decimal"
               placeholder="Insert price in CAD"
               id="inputPrice"
@@ -92,9 +92,9 @@ const formatToCad = new Intl.NumberFormat('en-CA', {
 });
 
 exchangeButton.addEventListener('click', (e) => {
-  const initialPrice = parseInt(inputPrice.value);
+  const initialPrice = parseFloat(inputPrice.value.replace(',', '.'));
 
-  if (isNaN(initialPrice)) return alert('Please insert a number to exchange');
+  if (isNaN(initialPrice)) return console.log(typeof initialPrice, initialPrice);
 
   const taxRender = haveTax.checked
     ? `<li>💸 tax: CAD ${formatToCad.format(getTaxes(initialPrice))}</li>
