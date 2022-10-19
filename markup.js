@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/dist/output.css" rel="stylesheet" />
-  </head>
-  <body>
-    <main class="min-h-screen flex flex-col">
+document.querySelector('#app').innerHTML = `
+<main class="min-h-screen flex flex-col">
       <!-- header -->
       <header class="header flex items-center p-8 border-b-4 border-b-red-600">
         <div class="header__container grow lowercase">
           <h1 class="header__title font-bold text-4xl text-red-600">How much?</h1>
           <p class="header__description text-gray-600">The real price of things</p>
         </div>
-        <img class="w-20 object-cover" src="./assets/images/logo.png" />
+        <img class="w-20 object-cover" src="./logo.png" />
       </header>
 
       <!-- content -->
@@ -62,7 +55,4 @@
         </p>
       </footer>
     </main>
-
-    <script src="./assets/js/index.js"></script>
-  </body>
-</html>
+`;
