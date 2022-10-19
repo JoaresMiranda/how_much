@@ -16,7 +16,7 @@ document.querySelector('#app').innerHTML = `
         <form class="p-8 flex flex-col gap-6">
           <div>
             <input
-              type="text"
+              type="number"
               placeholder="Insert price in CAD"
               id="inputPrice"
               class="w-full p-2 border border-gray-300 rounded-md"
@@ -38,7 +38,6 @@ document.querySelector('#app').innerHTML = `
       <!-- result -->
       <article id="resultContainer" class="hidden grow">
         <div class="p-8 flex flex-col gap-8">
-          <h2 class="valueResult text-2xl font-bold">Values</h2>
           <div class="resultPrices gap-6"></div>
           <button
             id="backButton"
@@ -50,12 +49,6 @@ document.querySelector('#app').innerHTML = `
         </div>
       </article>
 
-      <!-- footer -->
-      <footer>
-        <p class="text-center px-8 py-4 text-gray-400">
-          &copy &middot; Joares Miranda &middot; 2022
-        </p>
-      </footer>
     </main>
 `;
 
@@ -88,15 +81,25 @@ const toggleContainers = () => {
 };
 
 exchangeButton.addEventListener('click', (e) => {
-  toggleContainers();
   const initialPrice = parseInt(inputPrice.value);
 
+  if (isNaN(initialPrice)) return alert('né numero não macho');
+
+  const taxRender = haveTax.checked
+    ? `<li>💸 tax: CAD ${getTaxes(initialPrice)}</li>
+    <li>💵 price + tax: CAD ${addTaxes(initialPrice)}</li>`
+    : '<li>⚠️ <span class="text-xs text-slate-600">Price without taxes</span></li>';
+
   resultPrices.innerHTML = `
-  <ul class="flex flex-col gap-6">
-    <li>🇨🇦 price: CAD ${initialPrice}</li>
-    <li>💵 price + tax: CAD ${addTaxes(initialPrice)}</li>
-    <li><span class="font-bold">🇧🇷 R$ ${allPrices(initialPrice, haveTax.checked)}</span></li>
-  </ul>`;
+    <ul class="flex flex-col gap-4">
+    <li>🇨🇦 CAD ${initialPrice}</li>
+    ${taxRender}
+    <li><span class="text-xl font-bold">🇧🇷 R$ ${allPrices(
+      initialPrice,
+      haveTax.checked
+    )}</span> 🫠</li>
+        </ul>`;
+  toggleContainers();
 });
 
 backButton.addEventListener('click', (e) => toggleContainers());
