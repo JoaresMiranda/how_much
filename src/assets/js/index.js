@@ -27,9 +27,7 @@ const toggleContainers = () => {
 };
 
 exchangeButton.addEventListener('click', (e) => {
-  exchangeButton.addEventListener('click', (e) => toggleContainers());
-  backButton.addEventListener('click', (e) => toggleContainers());
-
+  toggleContainers();
   const initialPrice = parseInt(inputPrice.value);
 
   resultPrices.innerHTML = `
