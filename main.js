@@ -17,8 +17,7 @@ document.querySelector('#app').innerHTML = `
           <div>
             <input
               type="number"
-              pattern="[0-9]*"
-              inputmode="numeric"
+              inputmode="decimal"
               placeholder="Insert price in CAD"
               id="inputPrice"
               class="w-full p-2 border border-gray-300 rounded-md"
@@ -73,8 +72,8 @@ const getPriceReal = (price) => parseFloat(price) * CONVERTION;
 
 const allPrices = (initialPrice, tax) => {
   let finalPrice = initialPrice;
-  if (tax) return (finalPrice = getPriceReal(initialPrice + getTaxes(finalPrice)).toFixed(2));
-  return getPriceReal(finalPrice).toFixed(2);
+  if (tax) return (finalPrice = getPriceReal(initialPrice + getTaxes(finalPrice)));
+  return getPriceReal(finalPrice);
 };
 
 const toggleContainers = () => {
@@ -82,23 +81,32 @@ const toggleContainers = () => {
   resultContainer.classList.toggle('hidden');
 };
 
+const formatToReal = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+});
+
+const formatToCad = new Intl.NumberFormat('en-CA', {
+  style: 'currency',
+  currency: 'CAD',
+});
+
 exchangeButton.addEventListener('click', (e) => {
   const initialPrice = parseInt(inputPrice.value);
 
-  if (isNaN(initialPrice)) return alert('né numero não macho');
+  if (isNaN(initialPrice)) return alert('Please insert a number to exchange');
 
   const taxRender = haveTax.checked
-    ? `<li>💸 tax: CAD ${getTaxes(initialPrice)}</li>
-    <li>💵 price + tax: CAD ${addTaxes(initialPrice)}</li>`
+    ? `<li>💸 tax: CAD ${formatToCad.format(getTaxes(initialPrice))}</li>
+    <li>💵 price + tax: CAD ${formatToCad.format(addTaxes(initialPrice))}</li>`
     : '<li>⚠️ <span class="text-xs text-slate-600">Price without taxes</span></li>';
 
   resultPrices.innerHTML = `
     <ul class="flex flex-col gap-4">
-    <li>🇨🇦 CAD ${initialPrice}</li>
+    <li>🇨🇦 CAD ${formatToCad.format(initialPrice)}</li>
     ${taxRender}
-    <li><span class="text-xl font-bold">🇧🇷 R$ ${allPrices(
-      initialPrice,
-      haveTax.checked
+    <li><span class="text-xl font-bold">🇧🇷 ${formatToReal.format(
+      allPrices(initialPrice, haveTax.checked)
     )}</span> 🫠</li>
         </ul>`;
   toggleContainers();
