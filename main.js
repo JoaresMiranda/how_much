@@ -50,12 +50,6 @@ document.querySelector('#app').innerHTML = `
         </div>
       </article>
 
-      <!-- footer -->
-      <footer>
-        <p class="text-center px-8 py-4 text-gray-400">
-          &copy &middot; Joares Miranda &middot; 2022
-        </p>
-      </footer>
     </main>
 `;
 
