@@ -3,7 +3,7 @@ import './style.css';
 document.querySelector('#app').innerHTML = `
 <main class="min-h-screen flex flex-col">
       <!-- header -->
-      <header class="header flex items-center p-8 border-b-4 border-b-red-600">
+      <header class="header flex items-center p-6 border-b-4 border-b-red-600">
         <div class="header__container grow lowercase">
           <h1 class="header__title font-bold text-4xl text-red-600">How much?</h1>
           <p class="header__description text-gray-600">The real price of things</p>
@@ -17,6 +17,8 @@ document.querySelector('#app').innerHTML = `
           <div>
             <input
               type="number"
+              pattern="[0-9]*"
+              inputmode="numeric"
               placeholder="Insert price in CAD"
               id="inputPrice"
               class="w-full p-2 border border-gray-300 rounded-md"
