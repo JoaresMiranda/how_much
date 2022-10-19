@@ -1,24 +1,17 @@
 {
-  "name": "how_much",
-  "version": "1.0.0",
-  "description": "a real price of things",
-  "main": "index.js",
+  "name": "how-much",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-    "build": "npx tailwindcss -o build.css --minify"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JoaresMiranda/how_much.git"
-  },
-  "author": "Joares Miranda",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JoaresMiranda/how_much/issues"
-  },
-  "homepage": "https://github.com/JoaresMiranda/how_much#readme",
   "devDependencies": {
-    "tailwindcss": "^3.1.8"
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.1.8",
+    "vite": "^3.1.0"
   }
 }

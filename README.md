@@ -4,6 +4,7 @@ The real price of the things
 
 ## Build with
 
+- ViteJS
 - TailwindCSS
 - Javascript Vanilla
 
