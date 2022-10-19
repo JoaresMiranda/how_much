@@ -91,10 +91,13 @@ const formatToCad = new Intl.NumberFormat('en-CA', {
   currency: 'CAD',
 });
 
+inputPrice.focus();
+
 exchangeButton.addEventListener('click', (e) => {
   const initialPrice = parseFloat(inputPrice.value.replace(',', '.'));
+  console.log(initialPrice);
 
-  if (isNaN(initialPrice)) return console.log(typeof initialPrice, initialPrice);
+  if (isNaN(initialPrice)) return alert('Please, insert a price in CAD');
 
   const taxRender = haveTax.checked
     ? `<li>💸 tax: CAD ${formatToCad.format(getTaxes(initialPrice))}</li>
@@ -112,4 +115,8 @@ exchangeButton.addEventListener('click', (e) => {
   toggleContainers();
 });
 
-backButton.addEventListener('click', (e) => toggleContainers());
+backButton.addEventListener('click', (e) => {
+  toggleContainers();
+  inputPrice.value = '';
+  e.target = inputPrice.focus();
+});
