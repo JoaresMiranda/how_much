@@ -92,10 +92,10 @@ exchangeButton.addEventListener('click', (e) => {
   const initialPrice = parseInt(inputPrice.value);
 
   resultPrices.innerHTML = `
-  <ul class="list-disc flex flex-col gap-6">
-    <li>price: CAD ${initialPrice}</li>
-    <li>price + tax: CAD ${addTaxes(initialPrice)}</li>
-    <li><span class="font-bold">R$ ${allPrices(initialPrice, haveTax.checked)}</span></li>
+  <ul class="flex flex-col gap-6">
+    <li>🇨🇦 price: CAD ${initialPrice}</li>
+    <li>💵 price + tax: CAD ${addTaxes(initialPrice)}</li>
+    <li><span class="font-bold">🇧🇷 R$ ${allPrices(initialPrice, haveTax.checked)}</span></li>
   </ul>`;
 });
 
