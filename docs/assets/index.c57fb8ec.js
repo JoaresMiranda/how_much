@@ -56,8 +56,8 @@
       </footer>
     </main>
 `;const d=.13,u=3.9,p=document.querySelector("#priceForm"),f=document.querySelector("#inputPrice"),h=document.querySelector("#haveTax"),m=document.querySelector("#exchangeButton"),g=document.querySelector("#resultContainer"),x=document.querySelector(".resultPrices"),y=document.querySelector("#backButton"),i=t=>parseFloat(t)*d,b=t=>parseFloat(t)+parseFloat(i(t)),s=t=>parseFloat(t)*u,v=(t,o)=>{let c=t;return o?c=s(t+i(c)).toFixed(2):s(c).toFixed(2)},a=()=>{p.classList.toggle("hidden"),g.classList.toggle("hidden")};m.addEventListener("click",t=>{a();const o=parseInt(f.value);x.innerHTML=`
-  <ul class="list-disc flex flex-col gap-6">
-    <li>price: CAD ${o}</li>
-    <li>price + tax: CAD ${b(o)}</li>
-    <li><span class="font-bold">R$ ${v(o,h.checked)}</span></li>
+  <ul class="flex flex-col gap-6">
+    <li>\u{1F1E8}\u{1F1E6} price: CAD ${o}</li>
+    <li>\u{1F4B5} price + tax: CAD ${b(o)}</li>
+    <li><span class="font-bold">\u{1F1E7}\u{1F1F7} R$ ${v(o,h.checked)}</span></li>
   </ul>`});y.addEventListener("click",t=>a());
