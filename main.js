@@ -23,8 +23,8 @@ document.querySelector('#app').innerHTML = `
               class="w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
-          <div><input type="checkbox" id="haveTax" class="mr-2" checked="checked" />do have tax? <span class="text-xs text-slate-600">(13%)</span></div>
-          <div><input type="checkbox" id="haveTip" class="mr-2" checked="checked" />do have tip? <span class="text-xs text-slate-600">(15%)</span></div>
+          <div><input type="checkbox" id="haveTax" class="mr-2" />do have tax? <span class="text-xs text-slate-600">(13%)</span></div>
+          <div><input type="checkbox" id="haveTip" class="mr-2" />do have tip? <span class="text-xs text-slate-600">(15%)</span></div>
           <div>
             <input
               type="text"
@@ -96,11 +96,6 @@ const allPrices = (initialPrice, tax, tip) => {
   return getPriceReal(finalPrice);
 };
 
-console.log(allPrices(100, false, false));
-console.log(allPrices(100, true, false));
-console.log(allPrices(100, false, true));
-console.log(allPrices(100, true, true));
-
 const formatToReal = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL',
@@ -141,7 +136,7 @@ exchangeButton.addEventListener('click', (e) => {
   const differencePrice = priceBr - priceFull;
 
   const percentual = ((1 - priceFull / priceBr) * 100).toFixed(2);
-  const status = percentual > 0 ? `✅ Good shop` : `🚫 Bad shop`;
+  const status = percentual > 0 ? `✅ Good choice` : `🚫 Bad choice`;
 
   const priceBrRender = priceBr
     ? `
