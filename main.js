@@ -39,7 +39,7 @@ document.querySelector('#app').innerHTML = `
             type="button"
             class="button w-full bg-red-600 p-4 rounded-md text-white lowercase"
           >
-            Exchange
+            Check values
           </button>
         </form>
       </article>
