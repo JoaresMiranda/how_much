@@ -23,9 +23,10 @@ document.querySelector('#app').innerHTML = `
               class="w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
-          <div><input type="checkbox" id="haveTax" class="mr-2" />do have tax? <span class="text-xs text-slate-600">(13%)</span></div>
-          <div><input type="checkbox" id="haveTip" class="mr-2" />do have tip? <span class="text-xs text-slate-600">(15%)</span></div>
+          <div><input type="checkbox" id="haveTax" class="mr-2" />have tax? <span class="text-xs text-slate-600">(13%)</span></div>
+          <div><input type="checkbox" id="haveTip" class="mr-2" />have tip? <span class="text-xs text-slate-600">(15%)</span></div>
           <div>
+          <p class="text-sm mb-1">Do you want to compare prices?</p>
             <input
               type="text"
               inputmode="decimal"
@@ -115,7 +116,7 @@ inputPrice.focus();
 
 exchangeButton.addEventListener('click', (e) => {
   const initialPrice = parseFloat(inputPrice.value.replace(',', '.'));
-  if (isNaN(initialPrice)) return alert('Please, insert a price in CAD');
+  if (isNaN(initialPrice)) return alert('Please, insert a price');
 
   const priceFull = allPrices(initialPrice, haveTax.checked, haveTip.checked);
 
@@ -124,7 +125,7 @@ exchangeButton.addEventListener('click', (e) => {
     <li>💸 tax: CAD ${formatToCad.format(getTaxes(initialPrice))}</li>
     <li>💵 price + tax: CAD ${formatToCad.format(addTaxes(initialPrice))}</li>`
     : `
-    <li>⚠️ <span class="text-xs text-slate-600">Price without taxes</span></li>`;
+    <li><span class="text-xs text-slate-600">‼️ Price without taxes</span></li>`;
 
   const tipRender = haveTip.checked
     ? `
@@ -136,20 +137,21 @@ exchangeButton.addEventListener('click', (e) => {
   const differencePrice = priceBr - priceFull;
 
   const percentual = ((1 - priceFull / priceBr) * 100).toFixed(2);
-  const status = percentual > 0 ? `✅ Good choice` : `🚫 Bad choice`;
+  const status =
+    percentual > 0 ? `✅ It's a good opportunity!` : `⚠️ Brazil's price is equal or better.`;
 
   const priceBrRender = priceBr
     ? `
     <hr>
     <li class="text-sm">${status}</li>
-    <li>🤔 Price in Brazil: ${formatToReal.format(priceBr)}</li>
-    <li>🆚 Difference prices: ${formatToReal.format(differencePrice)}
+    <li>💰 Brazil's price: ${formatToReal.format(priceBr)}</li>
+    <li>🆚 Difference between prices: ${formatToReal.format(differencePrice)}
         <span class="text-xs text-slate-600">(${percentual}%)</span></li>`
     : ``;
 
   resultPrices.innerHTML = `
     <ul class="flex flex-col gap-4">
-        <li>🇨🇦 CAD ${formatToCad.format(initialPrice)}</li>
+        <li>🇨🇦 price: CAD ${formatToCad.format(initialPrice)}</li>
         ${taxRender}
         ${tipRender}
         <li class="text-xl font-bold">🇧🇷 ${formatToReal.format(priceFull)} 🫠</li>
@@ -161,6 +163,8 @@ exchangeButton.addEventListener('click', (e) => {
 backButton.addEventListener('click', (e) => {
   toggleContainers();
   inputPrice.value = '';
+  haveTax.checked = '';
+  haveTip.checked = '';
   inputPriceBr.value = '';
   inputPrice.focus();
 });
