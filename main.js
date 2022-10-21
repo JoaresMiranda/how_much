@@ -145,7 +145,7 @@ exchangeButton.addEventListener('click', (e) => {
     <hr>
     <li class="text-sm">${status}</li>
     <li>💰 Brazil's price: ${formatToReal.format(priceBr)}</li>
-    <li>🆚 Difference between prices: ${formatToReal.format(differencePrice)}
+    <li>🆚 Diff between prices: ${formatToReal.format(differencePrice)}
         <span class="text-xs text-slate-600">(${percentual}%)</span></li>`
     : ``;
 
