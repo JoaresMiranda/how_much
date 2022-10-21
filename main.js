@@ -5,8 +5,8 @@ document.querySelector('#app').innerHTML = `
       <!-- header -->
       <header class="header flex items-center p-6 border-b-4 border-b-red-600">
         <div class="header__container grow lowercase">
-          <h1 class="header__title font-bold text-4xl text-red-600">How much?</h1>
-          <p class="header__description text-gray-600">The real price of things</p>
+          <h1 class="header__title font-bold text-4xl text-red-600">is it worth?</h1>
+          <p class="header__description text-gray-600">No surprise expenses</p>
         </div>
         <img class="w-20 object-cover" src="./logo.png" />
       </header>
@@ -138,15 +138,17 @@ exchangeButton.addEventListener('click', (e) => {
 
   const percentual = ((1 - priceFull / priceBr) * 100).toFixed(2);
   const status =
-    percentual > 0 ? `✅ It's a good opportunity!` : `⚠️ Brazil's price is equal or better.`;
+    percentual > 0 ? `✅ It's a great opportunity!` : `⚠️ Brazil's price is equal or better.`;
 
   const priceBrRender = priceBr
     ? `
     <hr>
     <li class="text-sm">${status}</li>
     <li>💰 Brazil's price: ${formatToReal.format(priceBr)}</li>
-    <li>🆚 Diff between prices: ${formatToReal.format(differencePrice)}
-        <span class="text-xs text-slate-600">(${percentual}%)</span></li>`
+    <li>🆚 Difference between prices:<br /> 
+      <span class="ml-7">${formatToReal.format(differencePrice)}</span>
+      <span class="text-xs text-slate-600">(${percentual}%)</span>
+    </li>`
     : ``;
 
   resultPrices.innerHTML = `
