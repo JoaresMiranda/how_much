@@ -6,7 +6,7 @@ document.querySelector('#app').innerHTML = `
       <header class="header flex items-center p-6 border-b-4 border-b-red-600">
         <div class="header__container grow lowercase">
           <h1 class="header__title font-bold text-4xl text-red-600">is it worth?</h1>
-          <p class="header__description text-gray-600">No surprise expenses</p>
+          <p class="header__description text-gray-600">prices without surprises</p>
         </div>
         <img class="w-20 object-cover" src="./logo.png" />
       </header>
