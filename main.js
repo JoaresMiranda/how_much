@@ -14,17 +14,24 @@ document.querySelector('#app').innerHTML = `
       <!-- content -->
       <article id="priceForm" class="grow">
         <form class="p-8 flex flex-col gap-6">
-          <div>
+          <div class="flex items-center">
             <input
               type="text"
               inputmode="decimal"
               placeholder="Insert price in CAD"
               id="inputPrice"
-              class="w-full p-2 border border-gray-300 rounded-md"
+              class="w-1/2 p-2 border border-gray-300 rounded-md mr-4"
             />
+            <span class="text-sm">Exchange (R$)</span> <input
+              type="text""
+              inputmode="decimal"
+              placeholder="3,90"
+              id="inputExchange"
+              class="grow w-1/4 p-2 ml-2 border border-gray-300 rounded-md">
           </div>
-          <div><input type="checkbox" id="haveTax" class="mr-2" />have tax? <span class="text-xs text-slate-600">(13%)</span></div>
-          <div><input type="checkbox" id="haveTip" class="mr-2" />have tip? <span class="text-xs text-slate-600">(15%)</span></div>
+          <div><input type="checkbox" id="haveTax" /> <span class="ml-2">have tax?</span> <span class="text-xs text-slate-600">(13%)</span></div>
+          <div><input type="checkbox" id="haveTip" /> <span class="ml-2">have tip?</span> <span class="text-xs text-slate-600 mr-2">(15%)</span>
+          </div>
           <div>
           <p class="text-sm mb-1">Do you want to compare prices?</p>
             <input
@@ -64,10 +71,10 @@ document.querySelector('#app').innerHTML = `
 
 const TAXES = 0.13;
 const TIP = 0.15;
-const CONVERTION = 3.9;
 
 const priceForm = document.querySelector('#priceForm');
 const inputPrice = document.querySelector('#inputPrice');
+const inputExchange = document.querySelector('#inputExchange');
 const haveTax = document.querySelector('#haveTax');
 const haveTip = document.querySelector('#haveTip');
 const inputPriceBr = document.querySelector('#inputPriceBr');
@@ -84,17 +91,17 @@ const getTip = (price, tax) => (tax ? parseFloat(addTaxes(price) * TIP) : parseF
 const addTip = (price, tax) =>
   tax ? parseFloat(addTaxes(price) + getTip(price, tax)) : parseFloat(price + getTip(price, tax)); //FINAL PRICE WITH TAX AND TIP
 
-const getPriceReal = (price) => parseFloat(price) * CONVERTION;
+const getPriceReal = (price, exchange) => parseFloat(price) * exchange;
 
-const allPrices = (initialPrice, tax, tip) => {
+const allPrices = (initialPrice, tax, tip, exchange) => {
   let finalPrice = initialPrice;
   if (tax && tip) {
-    return (finalPrice = getPriceReal(addTip(finalPrice, true)));
+    return (finalPrice = getPriceReal(addTip(finalPrice, true), exchange));
   }
-  if (tax) return (finalPrice = getPriceReal(initialPrice + getTaxes(finalPrice)));
-  if (tip) return (finalPrice = getPriceReal(initialPrice + getTip(finalPrice)));
+  if (tax) return (finalPrice = getPriceReal(initialPrice + getTaxes(finalPrice), exchange));
+  if (tip) return (finalPrice = getPriceReal(initialPrice + getTip(finalPrice), exchange));
 
-  return getPriceReal(finalPrice);
+  return getPriceReal(finalPrice, exchange);
 };
 
 const formatToReal = new Intl.NumberFormat('pt-BR', {
@@ -115,10 +122,12 @@ const toggleContainers = () => {
 inputPrice.focus();
 
 exchangeButton.addEventListener('click', (e) => {
+  const exchange = !inputExchange.value ? 3.9 : parseFloat(inputExchange.value.replace(',', '.'));
+
   const initialPrice = parseFloat(inputPrice.value.replace(',', '.'));
   if (isNaN(initialPrice)) return alert('Please, insert a price');
 
-  const priceFull = allPrices(initialPrice, haveTax.checked, haveTip.checked);
+  const priceFull = allPrices(initialPrice, haveTax.checked, haveTip.checked, exchange);
 
   const taxRender = haveTax.checked
     ? `
@@ -156,6 +165,7 @@ exchangeButton.addEventListener('click', (e) => {
         <li>🇨🇦 price: CAD ${formatToCad.format(initialPrice)}</li>
         ${taxRender}
         ${tipRender}
+        <li>📈 exchange: ${formatToReal.format(exchange)}</li>
         <li class="text-xl font-bold">🇧🇷 ${formatToReal.format(priceFull)} 🫠</li>
         ${priceBrRender}
     </ul>`;
