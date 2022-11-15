@@ -42,4 +42,4 @@ Outra pergunta que já me fizeram é: “Se a ferramenta é para ajudar o turist
 
 ### Try it
 
-[💡 try it yourself](https://joaresmiranda.github.io/how_much)
+[💡 try it yourself](https://joaresmiranda.github.io/is_it_worth)
